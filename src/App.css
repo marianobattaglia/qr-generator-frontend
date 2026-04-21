@@ -1,0 +1,60 @@
+.app-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: #3498db;
+  color: #fff;
+}
+
+.app-header-icon {
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+}
+
+.app-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 11px 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-btn:hover {
+  color: #3498db;
+}
+
+.tab-btn--active {
+  color: #3498db;
+  border-bottom-color: #3498db;
+  background: #fff;
+}
+
+.tab-content {
+  padding: 20px;
+}

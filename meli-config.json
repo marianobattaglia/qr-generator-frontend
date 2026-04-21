@@ -1,0 +1,16 @@
+{
+  "schema": ["meli", "mercadopago"],
+  "deeplink_base": [
+    "cx/help",
+    "cx/support/cases",
+    "cx/support/yoshi",
+    "cx/melichat",
+    "meliphone/voip"
+  ],
+  "query_params": [
+    { "key": "url", "value": "" },
+    { "key": "register_caller_id", "value": "" },
+    { "key": "identity", "value": "" },
+    { "key": "access_token", "value": "" }
+  ]
+}
