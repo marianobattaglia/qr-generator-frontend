@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import './QROutput.css'
 
 export default function QROutput({ deeplink, error, warning }) {
+  const [hasImageError, setHasImageError] = useState(false)
+
   if (error) {
     return (
       <div className="qr-output qr-output--error">
@@ -20,15 +23,12 @@ export default function QROutput({ deeplink, error, warning }) {
         <img
           src={qrUrl}
           alt="QR Code"
-          className="qr-image"
+          className={`qr-image ${hasImageError ? 'qr-image--hidden' : ''}`}
           width={200}
           height={200}
-          onError={e => {
-            e.target.style.display = 'none'
-            e.target.nextSibling.style.display = 'block'
-          }}
+          onError={() => setHasImageError(true)}
         />
-        <p className="qr-image-fallback" style={{ display: 'none' }}>
+        <p className={`qr-image-fallback ${hasImageError ? 'qr-image-fallback--visible' : ''}`}>
           No se pudo generar el QR. Verificá tu conexión.
         </p>
       </div>

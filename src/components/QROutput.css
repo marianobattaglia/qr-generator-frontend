@@ -30,10 +30,19 @@
   border: 1px solid #e5e7eb;
 }
 
+.qr-image--hidden {
+  display: none;
+}
+
 .qr-image-fallback {
+  display: none;
   font-size: 0.8rem;
   color: #ef4444;
   text-align: center;
+}
+
+.qr-image-fallback--visible {
+  display: block;
 }
 
 .qr-output--error {
