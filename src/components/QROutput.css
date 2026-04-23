@@ -46,3 +46,9 @@
   color: #dc2626;
   text-align: center;
 }
+
+.qr-warning-msg {
+  font-size: 0.85rem;
+  color: #b45309;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 import './QROutput.css'
 
-export default function QROutput({ deeplink, error }) {
+export default function QROutput({ deeplink, error, warning }) {
   if (error) {
     return (
       <div className="qr-output qr-output--error">
@@ -32,6 +32,7 @@ export default function QROutput({ deeplink, error }) {
           No se pudo generar el QR. Verificá tu conexión.
         </p>
       </div>
+      {warning && <p className="qr-warning-msg">{warning}</p>}
     </div>
   )
 }

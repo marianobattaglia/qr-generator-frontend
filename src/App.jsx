@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import BuildTab from './components/BuildTab.jsx'
 import CustomTab from './components/CustomTab.jsx'
 import ConfigModal from './components/ConfigModal.jsx'
+import { sanitizePersistedState } from './utils/storageState.js'
 import './App.css'
 
 const STORAGE_KEY = 'qrGeneratorState'
@@ -20,14 +21,17 @@ const defaultState = {
 function loadFromStorage() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
-    return saved ? { ...defaultState, ...JSON.parse(saved) } : defaultState
+    return saved
+      ? { ...defaultState, ...sanitizePersistedState(JSON.parse(saved)) }
+      : defaultState
   } catch {
     return defaultState
   }
 }
 
 function loadActiveTab() {
-  return localStorage.getItem(TAB_KEY) || 'build'
+  const savedTab = localStorage.getItem(TAB_KEY)
+  return savedTab === 'custom' ? 'custom' : 'build'
 }
 
 export default function App() {
@@ -39,7 +43,7 @@ export default function App() {
   }, [activeTab])
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sanitizePersistedState(state)))
   }, [state])
 
   function updateState(partial) {

@@ -1,20 +1,25 @@
 import { useState } from 'react'
 import QROutput from './QROutput.jsx'
+import { validateQRCodeContent } from '../utils/deeplinkValidation.js'
 import './CustomTab.css'
 
 export default function CustomTab({ value, onChange }) {
   const [generatedText, setGeneratedText] = useState(null)
   const [error, setError] = useState(null)
+  const [warning, setWarning] = useState(null)
 
   function handleGenerate() {
     setError(null)
+    setWarning(null)
     setGeneratedText(null)
-    const text = value.trim()
-    if (!text) {
-      setError('Enter text or URL.')
-      return
+
+    try {
+      const validatedContent = validateQRCodeContent(value)
+      setGeneratedText(validatedContent.value)
+      setWarning(validatedContent.warning)
+    } catch (validationError) {
+      setError(validationError.message)
     }
-    setGeneratedText(text)
   }
 
   return (
@@ -34,7 +39,7 @@ export default function CustomTab({ value, onChange }) {
         Generate QR code
       </button>
 
-      <QROutput deeplink={generatedText} error={error} />
+      <QROutput deeplink={generatedText} error={error} warning={warning} />
     </div>
   )
 }
