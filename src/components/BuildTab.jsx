@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import QueryParams from './QueryParams.jsx'
 import QROutput from './QROutput.jsx'
+import { validateDeeplinkURL } from '../utils/deeplinkValidation.js'
 import './BuildTab.css'
 
 export default function BuildTab({ state, updateState }) {
   const [generatedDeeplink, setGeneratedDeeplink] = useState(null)
   const [error, setError] = useState(null)
+  const [warning, setWarning] = useState(null)
 
   function buildDeeplink() {
     setError(null)
+    setWarning(null)
     setGeneratedDeeplink(null)
 
     const schema = state.schemaValue.trim()
@@ -30,7 +33,14 @@ export default function BuildTab({ state, updateState }) {
     })
 
     const queryString = params.length > 0 ? `?${params.join('&')}` : ''
-    setGeneratedDeeplink(`${schema}://${base}${queryString}`)
+
+    try {
+      const validatedDeeplink = validateDeeplinkURL(`${schema}://${base}${queryString}`)
+      setGeneratedDeeplink(validatedDeeplink.value)
+      setWarning(validatedDeeplink.warning)
+    } catch (validationError) {
+      setError(validationError.message)
+    }
   }
 
   return (
@@ -105,7 +115,7 @@ export default function BuildTab({ state, updateState }) {
         Generate QR code
       </button>
 
-      <QROutput deeplink={generatedDeeplink} error={error} />
+      <QROutput deeplink={generatedDeeplink} error={error} warning={warning} />
     </div>
   )
 }
